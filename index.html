@@ -25,76 +25,77 @@
         body { background-color: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
         h1, h2, h3, .serif { font-family: 'Cormorant Garamond', serif; }
 
+        /* --- BACKGROUND --- */
         #bg-canvas { position: fixed; inset: 0; z-index: -1; opacity: 0.4; }
 
-        /* --- LOADER --- */
-        .loader { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .progress-bar { width: 250px; height: 1px; background: #222; margin-top: 20px; overflow: hidden; }
-        .progress-fill { height: 100%; width: 0%; background: var(--accent); }
+        /* --- 15 SEC LOADER --- */
+        .loader { 
+            position: fixed; inset: 0; background: #000; z-index: 9999; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+        }
+        .load-count { font-size: 5rem; font-weight: 100; font-family: 'Montserrat'; color: var(--accent); margin-bottom: 10px; }
+        .load-status { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; opacity: 0.6; height: 1.5em; }
+        .progress-bar { width: 300px; height: 2px; background: #111; margin-top: 30px; position: relative; overflow: hidden; }
+        .progress-fill { height: 100%; width: 0%; background: var(--accent); box-shadow: 0 0 15px var(--accent); }
 
         /* --- HERO --- */
         section { padding: 10vh 8vw; }
         .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        .hero-title { font-size: clamp(3rem, 12vw, 8rem); font-weight: 300; letter-spacing: -2px; }
+        .hero-title { font-size: clamp(3rem, 12vw, 8rem); font-weight: 300; letter-spacing: -2px; line-height: 0.9; }
         .hero-title span { color: var(--accent); font-style: italic; }
 
-        /* --- ROAST TO TOAST TOGGLE --- */
+        /* --- ROAST/TOAST TOGGLE --- */
         .toggle-zone { text-align: center; margin: 40px 0; }
         .mode-btn { background: transparent; border: 1px solid var(--accent); color: var(--accent); padding: 12px 40px; border-radius: 50px; cursor: pointer; font-size: 0.8rem; letter-spacing: 2px; transition: 0.4s; }
         .mode-btn.toast-active { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
-        .content-switch { font-size: 1.5rem; min-height: 100px; display: flex; align-items: center; justify-content: center; transition: 0.3s; font-style: italic; max-width: 800px; margin: 0 auto; }
+        .content-switch { font-size: 1.5rem; min-height: 100px; display: flex; align-items: center; justify-content: center; transition: 0.3s; font-style: italic; max-width: 800px; margin: 0 auto; line-height: 1.4; }
 
-        /* --- INFINITE TICKER --- */
-        .ticker-wrap { background: var(--accent); color: #000; padding: 10px 0; overflow: hidden; white-space: nowrap; margin: 40px 0; transform: rotate(-1deg); }
-        .ticker-move { display: inline-block; animation: ticker 60s linear infinite; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; }
+        /* --- TICKER --- */
+        .ticker-wrap { background: var(--accent); color: #000; padding: 12px 0; overflow: hidden; white-space: nowrap; transform: rotate(-1.5deg); margin: 60px 0; z-index: 10; position: relative; }
+        .ticker-move { display: inline-block; animation: ticker 80s linear infinite; font-weight: 800; font-size: 1rem; text-transform: uppercase; }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* --- ANALYTICS --- */
+        /* --- DASHBOARD --- */
         .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 50px; }
-        .stat-card { background: var(--glass); border: 1px solid var(--border); padding: 30px; border-radius: 15px; text-align: center; transition: 0.3s; }
-        .stat-val { display: block; font-size: 2.5rem; font-family: 'Cormorant Garamond'; color: var(--accent); margin-bottom: 5px; }
-        .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; }
+        .stat-card { background: var(--glass); border: 1px solid var(--border); padding: 30px; border-radius: 15px; text-align: center; }
+        .stat-val { display: block; font-size: 3rem; font-family: 'Cormorant Garamond'; color: var(--accent); margin-bottom: 5px; }
+        .stat-label { font-size: 0.7rem; text-transform: uppercase; opacity: 0.5; letter-spacing: 2px; }
 
         /* --- GALLERY --- */
         .gallery-wrap { height: 100vh; display: flex; align-items: center; overflow: hidden; }
-        .cards-container { display: flex; gap: 40px; padding-left: 10vw; }
-        .card { width: 350px; height: 500px; flex-shrink: 0; border-radius: 20px; overflow: hidden; filter: grayscale(1); transform: scale(0.9); transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid var(--border); }
-        .card.active { filter: grayscale(0); transform: scale(1); border-color: var(--accent); }
+        .cards-container { display: flex; gap: 40px; padding-left: 15vw; }
+        .card { width: 400px; height: 550px; flex-shrink: 0; border-radius: 15px; overflow: hidden; filter: grayscale(1) contrast(1.2); transform: scale(0.85); transition: 0.8s cubic-bezier(0.2, 1, 0.2, 1); border: 1px solid var(--border); }
+        .card.active { filter: grayscale(0) contrast(1); transform: scale(1.05); border-color: var(--accent); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
         .card img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* --- RANDOM FACT SPAMMER --- */
-        .fact-spammer { text-align: center; padding: 100px 5vw; background: rgba(255,157,233,0.03); border-radius: 50px; margin: 50px 0; }
-        #fact-display { font-size: 2rem; font-family: 'Cormorant Garamond'; margin: 40px 0; color: var(--accent); min-height: 80px; }
-        .spam-btn { background: var(--accent); border: none; padding: 15px 40px; color: #000; font-weight: 700; cursor: pointer; border-radius: 5px; }
+        /* --- RANDOM FACT --- */
+        .fact-spammer { text-align: center; padding: 120px 5vw; background: linear-gradient(to bottom, transparent, rgba(255,157,233,0.05), transparent); margin: 80px 0; }
+        #fact-display { font-size: 2.2rem; font-family: 'Cormorant Garamond'; margin: 40px 0; color: var(--accent); min-height: 100px; font-style: italic; }
+        .spam-btn { background: var(--accent); border: none; padding: 18px 45px; color: #000; font-weight: 800; cursor: pointer; border-radius: 50px; letter-spacing: 1px; }
 
-        /* --- THE RULES --- */
-        .rules-list { counter-reset: rules; max-width: 800px; margin: 50px auto; }
-        .rule-item { padding: 30px; border-bottom: 1px solid var(--border); position: relative; }
-        .rule-item::before { counter-increment: rules; content: "CLAUSE " counter(rules); position: absolute; left: -100px; font-size: 0.7rem; color: var(--accent); top: 40px; letter-spacing: 2px; }
+        footer { text-align: center; padding: 120px 0; border-top: 1px solid var(--border); }
+        .signature { font-family: 'Cormorant Garamond'; font-size: 3rem; font-style: italic; color: var(--accent); margin-top: 20px; }
 
-        footer { text-align: center; padding: 100px 0; opacity: 0.8; }
-        .signature { font-family: 'Cormorant Garamond'; font-size: 2.5rem; font-style: italic; color: var(--accent); margin-top: 20px; }
-
-        @media (max-width: 900px) { .rule-item::before { position: static; display: block; margin-bottom: 10px; } }
+        @media (max-width: 768px) { .card { width: 300px; height: 450px; } }
     </style>
 </head>
 <body>
 
 <div class="loader">
-    <div style="letter-spacing: 5px; font-size: 0.8rem;">CHARTING THE CHAOS...</div>
-    <div class="progress-bar"><div class="progress-fill"></div></div>
+    <div class="load-count" id="percentage">0%</div>
+    <div class="load-status" id="status-text">Waking up the Princess...</div>
+    <div class="progress-bar"><div class="progress-fill" id="fill"></div></div>
 </div>
 
 <canvas id="bg-canvas"></canvas>
 
 <div class="ticker-wrap">
-    <div class="ticker-move" id="ticker-content">
-        </div>
+    <div class="ticker-move" id="ticker-content"></div>
 </div>
 
 <section class="hero">
-    <div style="letter-spacing: 10px; opacity: 0.5; margin-bottom: 20px;">CHAPTER 18</div>
-    <h1 class="hero-title">The <span>Princess</span><br>Of Delulu Land</h1>
+    <div style="letter-spacing: 12px; opacity: 0.4; margin-bottom: 20px; font-size: 0.7rem;">ESTABLISHED 2008</div>
+    <h1 class="hero-title">The <span>Ultimate</span><br>Riddhima Chapter</h1>
     
     <div class="toggle-zone">
         <button class="mode-btn" id="mode-toggle">CURRENT MODE: ROAST</button>
@@ -104,106 +105,118 @@
 
 <section>
     <div class="dashboard">
-        <div class="stat-card"><span class="stat-val">10k+</span><span class="stat-label">Terabytes of Brain Space</span></div>
-        <div class="stat-card"><span class="stat-val">4 Days</span><span class="stat-label">Avg Voice Note Length</span></div>
-        <div class="stat-card"><span class="stat-val">0.1%</span><span class="stat-label">Time Spent Being Quiet</span></div>
-        <div class="stat-card"><span class="stat-val">100%</span><span class="stat-label">Brotherhood Locked In</span></div>
+        <div class="stat-card"><span class="stat-val">32</span><span class="stat-label">Core Memories Loaded</span></div>
+        <div class="stat-card"><span class="stat-val">100%</span><span class="stat-label">Delulu Energy</span></div>
+        <div class="stat-card"><span class="stat-val">0</span><span class="stat-label">Seconds of Silence</span></div>
+        <div class="stat-card"><span class="stat-val">∞</span><span class="stat-label">Brotherly Love</span></div>
     </div>
 </section>
 
 <section class="fact-spammer">
-    <h2 class="serif" style="font-size: 3rem;">The Infinite Scroll of Riddhima</h2>
-    <div id="fact-display">Click the button for a random truth...</div>
-    <button class="spam-btn" id="spam-trigger">GENERATE ANOTHER TRUTH</button>
+    <h2 class="serif" style="font-size: 3.5rem;">The Infinite Scroll of Riddhima</h2>
+    <div id="fact-display">Click the button to generate a random truth...</div>
+    <button class="spam-btn" id="spam-trigger">GIVE ME ANOTHER ONE</button>
 </section>
 
 <section class="gallery-wrap">
     <div class="cards-container" id="gallery-root"></div>
 </section>
 
-<section>
-    <h2 class="serif" style="font-size: 3rem; text-align: center; margin-bottom: 40px;">Official Terms of Sibling-hood</h2>
-    <div class="rules-list">
-        <div class="rule-item">Silence is a crime. If there is a quiet moment, it must be filled with a random opinion nobody asked for.</div>
-        <div class="rule-item">The "Princess" is always right. Even when she’s wrong, refer to the fact that she's the Princess.</div>
-        <div class="rule-item">All eye contact from strangers must be interpreted as a marriage proposal.</div>
-        <div class="rule-item">Malay is legally required to listen to all yapping, regardless of time or relevance.</div>
-        <div class="rule-item">No Exit Clause. You’re stuck here for the next 60 years. Minimum.</div>
-    </div>
-</section>
-
-<section style="text-align: center; max-width: 900px; margin: 0 auto; padding-bottom: 100px;">
-    <h2 class="serif" style="font-size: 3.5rem; color: var(--accent);">The 5-Month Theory</h2>
-    <p style="font-size: 1.2rem; line-height: 1.8; opacity: 0.8; margin-top: 30px;">
-        How did you walk into my life so casually and, without even trying, become one of the most important people in it? 
-        Time around you doesn’t behave normally—it stretches, it settles, it stays. 150 days felt like 10 years of history. 
-        I hate how used to your noise I’ve become. I hate how it turned into comfort.
+<section style="text-align: center; max-width: 900px; margin: 0 auto; padding: 100px 20px;">
+    <h2 class="serif" style="font-size: 4rem; color: var(--accent);">The 5-Month Warp</h2>
+    <p style="font-size: 1.4rem; line-height: 1.8; opacity: 0.8; margin-top: 40px; font-weight: 300;">
+        They say it takes years to build a bond this thick, but we did it in 150 days. 
+        It’s a scientific glitch. A soul-bond hidden inside 4-minute voice notes and Mumbai exhaustion. 
+        I’ve grown so used to your noise that silence actually feels weird now. 
+        Don't ever stop being exactly this annoying.
     </p>
 </section>
 
 <footer>
-    <p>Happy Birthday, Big Brother.</p>
+    <p>Happy 18th Birthday, Weirdo.</p>
     <div class="signature">With all my love, Malay (Princess)</div>
 </footer>
 
 <script>
     gsap.registerPlugin(ScrollTrigger);
 
-    const lenis = new Lenis();
+    // 1. PRELOAD IMAGES & 15 SEC LOADER
+    const totalImages = 32;
+    const percentageText = document.getElementById('percentage');
+    const progressFill = document.getElementById('fill');
+    const statusText = document.getElementById('status-text');
+    
+    const statusMessages = [
+        "Waking up the Princess...",
+        "Downloading 400GB of yapping...",
+        "Calculated Delulu level: Critical",
+        "Loading Mumbai memories...",
+        "Polishing the crown...",
+        "Preparing the 18th Chapter...",
+        "Buffering inside jokes...",
+        "Finalizing the chaos..."
+    ];
+
+    // THE 15-SECOND ANIMATION
+    let loadData = { val: 0 };
+    gsap.to(loadData, {
+        val: 100,
+        duration: 15, // <--- 15 SECONDS EXACTLY
+        ease: "power1.inOut",
+        onUpdate: () => {
+            const progress = Math.floor(loadData.val);
+            percentageText.innerText = progress + "%";
+            progressFill.style.width = progress + "%";
+            
+            // Change status message every 2 seconds
+            const msgIndex = Math.floor((progress / 100) * statusMessages.length);
+            if(statusMessages[msgIndex]) statusText.innerText = statusMessages[msgIndex];
+        },
+        onComplete: () => {
+            gsap.to(".loader", { 
+                yPercent: -100, 
+                duration: 1.5, 
+                ease: "expo.inOut",
+                onComplete: () => { document.querySelector('.loader').style.display = 'none'; }
+            });
+        }
+    });
+
+    // Preload Logic (Browser starts fetching images in background)
+    for (let i = 1; i <= totalImages; i++) {
+        const img = new Image();
+        img.src = `${i}.jpeg`;
+    }
+
+    // 2. SMOOTH SCROLL
+    const lenis = new Lenis({ duration: 1.5 });
     function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
 
-    gsap.to(".progress-fill", { width: "100%", duration: 2.5, onComplete: () => {
-        gsap.to(".loader", { yPercent: -100, duration: 1 });
-    }});
-
-    // --- A THOUSAND FACTS (The Logic) ---
+    // 3. CONTENT & GALLERY
     const allFacts = [
         "Professional Annoying Specialist.", "Full-time resident of Delulu Land.", "Occupying emotional real estate rent-free.",
         "Success Rate of Roasts: 99.9%.", "Can speak 400 words per minute when excited.", "Expert at interpreting random eye contact.",
         "Mumbai Trip Survivor.", "Elite-level Yapper.", "Career Path: Professional Headache.", "Has a 100% Show-up rate.",
-        "Actually a genius (don't tell her).", "One of those people I can't imagine life without.", "Thinks everyone is into her.",
-        "The best 'brother' I ever had.", "Will probably yap for the next 60 years straight.", "A heart of gold hidden under sarcasm.",
-        "The only person who knows what 'I'm fine' actually means.", "Old soul in an 18-year-old body.", "My safe place.",
-        "Warning: Level 18 Unlocked.", "Legal independence obtained. Quietness still not found.", "Elite roast master.",
-        "150 days = 10 years of memories.", "Mumbai chaos enthusiast.", "Will never admit I'm right (even though I am).",
-        "Princess Status: Permanent.", "Rent-free resident of my head.", "Stay weird. Stay loud. Stay you."
+        "One of those people I can't imagine life without.", "The best 'brother' I ever had.", "Will probably yap for the next 60 years straight.",
+        "150 days = 10 years of memories.", "Princess Status: Permanent.", "Stay weird. Stay loud. Stay you."
     ];
 
-    // Populate Ticker
     const ticker = document.getElementById('ticker-content');
-    ticker.innerHTML = new Array(10).fill(allFacts.join(" • ")).join(" • ");
+    ticker.innerHTML = new Array(15).fill(allFacts.join(" • ")).join(" • ");
 
-    // Fact Spammer
     const spamBtn = document.getElementById('spam-trigger');
     const factDisplay = document.getElementById('fact-display');
     spamBtn.addEventListener('click', () => {
         const randomFact = allFacts[Math.floor(Math.random() * allFacts.length)];
-        gsap.fromTo(factDisplay, { opacity: 0, scale: 0.9 }, { 
-            opacity: 1, scale: 1, duration: 0.3, 
-            onStart: () => { factDisplay.innerText = randomFact; }
-        });
+        gsap.fromTo(factDisplay, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, onStart: () => { factDisplay.innerText = randomFact; } });
     });
 
-    // Roast to Toast
-    const toggleBtn = document.getElementById('mode-toggle');
-    const modeText = document.getElementById('mode-text');
-    let isToast = false;
-    toggleBtn.addEventListener('click', () => {
-        isToast = !isToast;
-        toggleBtn.classList.toggle('toast-active');
-        toggleBtn.innerText = isToast ? "CURRENT MODE: TOAST" : "CURRENT MODE: ROAST";
-        modeText.innerText = isToast ? 
-            "You are my safe place, my chosen brother, and the person I can't imagine my life without." : 
-            "You are an elite-level yapping machine and a professional pain in my neck.";
-    });
-
-    // Gallery
     const root = document.getElementById('gallery-root');
-    for (let i = 1; i <= 32; i++) {
+    for (let i = 1; i <= totalImages; i++) {
         const div = document.createElement('div');
         div.className = 'card';
-        div.innerHTML = `<img src="${i}.jpeg" loading="lazy">`;
+        div.innerHTML = `<img src="${i}.jpeg">`;
         root.appendChild(div);
     }
 
@@ -215,7 +228,7 @@
             trigger: ".gallery-wrap",
             pin: true,
             scrub: 1,
-            end: () => "+=" + root.scrollWidth
+            end: () => "+=" + (root.scrollWidth)
         }
     });
 
@@ -232,7 +245,20 @@
         });
     });
 
-    // Background
+    // Toggle Mode
+    const toggleBtn = document.getElementById('mode-toggle');
+    const modeText = document.getElementById('mode-text');
+    let isToast = false;
+    toggleBtn.addEventListener('click', () => {
+        isToast = !isToast;
+        toggleBtn.classList.toggle('toast-active');
+        toggleBtn.innerText = isToast ? "CURRENT MODE: TOAST" : "CURRENT MODE: ROAST";
+        modeText.innerText = isToast ? 
+            "You are my safe place, my chosen brother, and the person I can't imagine my life without." : 
+            "You are an elite-level yapping machine and a professional pain in my neck.";
+    });
+
+    // Background Canvas
     const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
     let w, h;
@@ -240,7 +266,7 @@
     window.addEventListener('resize', resize); resize();
     function anim() { 
         ctx.clearRect(0,0,w,h); ctx.fillStyle = "rgba(255,157,233,0.3)";
-        for(let i=0; i<50; i++) { ctx.beginPath(); ctx.arc(Math.random()*w, Math.random()*h, 1, 0, Math.PI*2); ctx.fill(); }
+        for(let i=0; i<40; i++) { ctx.beginPath(); ctx.arc(Math.random()*w, Math.random()*h, 0.8, 0, Math.PI*2); ctx.fill(); }
         requestAnimationFrame(anim); 
     }
     anim();
