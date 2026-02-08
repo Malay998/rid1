@@ -15,14 +15,41 @@
     <style>
         :root {
             --bg: #050505;
-            --text: #e0e0e0;
-            --accent: #ff9de9; 
-            --glass: rgba(255, 255, 255, 0.05);
-            --border: rgba(255, 255, 255, 0.1);
+            --bg-soft: #0a0a0a;
+            --bg-gradient: linear-gradient(135deg, #0a0a0a 0%, #151515 50%, #0a0a0a 100%);
+            
+            --text: #f0f0f0;
+            --text-dim: #a0a0a0;
+            
+            /* GRADIENT ACCENT SYSTEM */
+            --accent-primary: #ff4fd8;
+            --accent-secondary: #9d4edd;
+            --accent-gradient: linear-gradient(135deg, #ff4fd8 0%, #9d4edd 50%, #6a5af9 100%);
+            --accent-glow: rgba(255, 79, 216, 0.25);
+            
+            /* GLASS MORPHISM */
+            --glass: rgba(255, 255, 255, 0.07);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            
+            /* NEON EFFECTS */
+            --neon-pink: 0 0 20px rgba(255, 79, 216, 0.7);
+            --neon-purple: 0 0 30px rgba(157, 78, 221, 0.5);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
+        
+        body { 
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 79, 216, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(157, 78, 221, 0.08) 0%, transparent 50%),
+                var(--bg-gradient);
+            color: var(--text); 
+            font-family: 'Montserrat', sans-serif; 
+            overflow-x: hidden;
+            background-attachment: fixed;
+        }
+        
         h1, h2, h3, .serif { font-family: 'Cormorant Garamond', serif; }
 
         /* --- BACKGROUND --- */
@@ -30,53 +57,352 @@
 
         /* --- 15 SEC LOADER --- */
         .loader { 
-            position: fixed; inset: 0; background: #000; z-index: 9999; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            position: fixed; inset: 0; 
+            background: var(--bg-gradient); 
+            z-index: 9999; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
         }
-        .load-count { font-size: 5rem; font-weight: 100; font-family: 'Montserrat'; color: var(--accent); margin-bottom: 10px; }
-        .load-status { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; opacity: 0.6; height: 1.5em; }
-        .progress-bar { width: 300px; height: 2px; background: #111; margin-top: 30px; position: relative; overflow: hidden; }
-        .progress-fill { height: 100%; width: 0%; background: var(--accent); box-shadow: 0 0 15px var(--accent); }
+        .load-count { 
+            font-size: 5rem; 
+            font-weight: 100; 
+            font-family: 'Montserrat'; 
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px; 
+        }
+        .load-status { 
+            font-size: 0.7rem; 
+            letter-spacing: 3px; 
+            text-transform: uppercase; 
+            opacity: 0.8; 
+            height: 1.5em; 
+            color: var(--text-dim);
+        }
+        .progress-bar { 
+            width: 300px; 
+            height: 2px; 
+            background: rgba(255, 255, 255, 0.1); 
+            margin-top: 30px; 
+            position: relative; 
+            overflow: hidden; 
+            border-radius: 1px;
+        }
+        .progress-fill { 
+            height: 100%; 
+            width: 0%; 
+            background: var(--accent-gradient);
+            box-shadow: var(--neon-pink);
+            position: relative;
+            border-radius: 1px;
+        }
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.4), 
+                transparent);
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
 
         /* --- HERO --- */
         section { padding: 10vh 8vw; }
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        .hero-title { font-size: clamp(3rem, 12vw, 8rem); font-weight: 300; letter-spacing: -2px; line-height: 0.9; }
-        .hero-title span { color: var(--accent); font-style: italic; }
+        .hero { 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center; 
+            position: relative;
+        }
+        .hero-title { 
+            font-size: clamp(3rem, 12vw, 8rem); 
+            font-weight: 300; 
+            letter-spacing: -2px; 
+            line-height: 0.9;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 50px var(--accent-glow);
+        }
+        .hero-title span {
+            font-style: italic;
+            position: relative;
+            display: inline-block;
+        }
 
         /* --- ROAST/TOAST TOGGLE --- */
-        .toggle-zone { text-align: center; margin: 40px 0; }
-        .mode-btn { background: transparent; border: 1px solid var(--accent); color: var(--accent); padding: 12px 40px; border-radius: 50px; cursor: pointer; font-size: 0.8rem; letter-spacing: 2px; transition: 0.4s; }
-        .mode-btn.toast-active { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
-        .content-switch { font-size: 1.5rem; min-height: 100px; display: flex; align-items: center; justify-content: center; transition: 0.3s; font-style: italic; max-width: 800px; margin: 0 auto; line-height: 1.4; }
+        .toggle-zone { text-align: center; margin: 60px 0; }
+        .mode-btn { 
+            background: transparent; 
+            border: 1px solid var(--accent-primary);
+            color: var(--accent-primary); 
+            padding: 14px 45px; 
+            border-radius: 50px; 
+            cursor: pointer; 
+            font-size: 0.8rem; 
+            letter-spacing: 2px; 
+            transition: all 0.4s cubic-bezier(0.2, 1, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-gradient);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+        .mode-btn.toast-active { 
+            color: #000; 
+            border-color: transparent;
+        }
+        .mode-btn.toast-active::before {
+            left: 0;
+        }
+        .content-switch { 
+            font-size: 1.8rem; 
+            min-height: 120px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            transition: 0.3s; 
+            font-style: italic; 
+            max-width: 800px; 
+            margin: 30px auto; 
+            line-height: 1.5;
+            padding: 0 20px;
+        }
 
         /* --- TICKER --- */
-        .ticker-wrap { background: var(--accent); color: #000; padding: 12px 0; overflow: hidden; white-space: nowrap; transform: rotate(-1.5deg); margin: 60px 0; z-index: 10; position: relative; }
-        .ticker-move { display: inline-block; animation: ticker 200s linear infinite; font-weight: 800; font-size: 1rem; text-transform: uppercase; }
-        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .ticker-wrap { 
+            background: var(--accent-gradient); 
+            color: #000; 
+            padding: 18px 0; 
+            overflow: hidden; 
+            white-space: nowrap; 
+            transform: rotate(-1.5deg); 
+            margin: 60px 0; 
+            z-index: 10; 
+            position: relative;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+        .ticker-move { 
+            display: inline-block; 
+            animation: ticker 200s linear infinite; 
+            font-weight: 900; 
+            font-size: 1rem; 
+            text-transform: uppercase; 
+            padding: 0 20px;
+        }
+        @keyframes ticker { 
+            0% { transform: translateX(0); } 
+            100% { transform: translateX(-50%); } 
+        }
 
         /* --- DASHBOARD --- */
-        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 50px; }
-        .stat-card { background: var(--glass); border: 1px solid var(--border); padding: 30px; border-radius: 15px; text-align: center; }
-        .stat-val { display: block; font-size: 3rem; font-family: 'Cormorant Garamond'; color: var(--accent); margin-bottom: 5px; }
-        .stat-label { font-size: 0.7rem; text-transform: uppercase; opacity: 0.5; letter-spacing: 2px; }
+        .dashboard { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 25px; 
+            margin-top: 50px; 
+        }
+        .stat-card { 
+            background: var(--glass); 
+            border: 1px solid var(--glass-border); 
+            padding: 35px 25px; 
+            border-radius: 20px; 
+            text-align: center; 
+            backdrop-filter: blur(10px);
+            box-shadow: var(--glass-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        .stat-val { 
+            display: block; 
+            font-size: 3.5rem; 
+            font-family: 'Cormorant Garamond'; 
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 5px; 
+            font-weight: 600;
+        }
+        .stat-label { 
+            font-size: 0.7rem; 
+            text-transform: uppercase; 
+            opacity: 0.7; 
+            letter-spacing: 2px; 
+            color: var(--text-dim);
+        }
 
         /* --- GALLERY --- */
-        .gallery-wrap { height: 100vh; display: flex; align-items: center; overflow: hidden; }
-        .cards-container { display: flex; gap: 40px; padding-left: 15vw; }
-        .card { width: 400px; height: 550px; flex-shrink: 0; border-radius: 15px; overflow: hidden; filter: grayscale(1) contrast(1.2); transform: scale(0.85); transition: 0.8s cubic-bezier(0.2, 1, 0.2, 1); border: 1px solid var(--border); }
-        .card.active { filter: grayscale(0) contrast(1); transform: scale(1.05); border-color: var(--accent); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        .card img { width: 100%; height: 100%; object-fit: cover; }
+        .gallery-wrap { 
+            height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            overflow: hidden; 
+            position: relative;
+        }
+        .cards-container { 
+            display: flex; 
+            gap: 40px; 
+            padding-left: 15vw; 
+        }
+        .card { 
+            width: 400px; 
+            height: 550px; 
+            flex-shrink: 0; 
+            border-radius: 20px; 
+            overflow: hidden; 
+            filter: grayscale(0.8) brightness(0.7);
+            transform: scale(0.85); 
+            transition: 0.8s cubic-bezier(0.2, 1, 0.2, 1); 
+            border: 1px solid var(--glass-border);
+            position: relative;
+            background: linear-gradient(
+                180deg,
+                rgba(255,255,255,0.04),
+                rgba(0,0,0,0.6)
+            );
+        }
+        .card.active { 
+            filter: grayscale(0) brightness(1); 
+            transform: scale(1.05); 
+            border-color: transparent;
+            box-shadow: 
+                0 20px 50px rgba(0,0,0,0.6),
+                0 0 40px var(--accent-glow);
+        }
+        .card img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+        .card.active img {
+            transform: scale(1.05);
+        }
 
         /* --- RANDOM FACT --- */
-        .fact-spammer { text-align: center; padding: 120px 5vw; background: linear-gradient(to bottom, transparent, rgba(255,157,233,0.05), transparent); margin: 80px 0; }
-        #fact-display { font-size: 2.2rem; font-family: 'Cormorant Garamond'; margin: 40px 0; color: var(--accent); min-height: 100px; font-style: italic; }
-        .spam-btn { background: var(--accent); border: none; padding: 18px 45px; color: #000; font-weight: 800; cursor: pointer; border-radius: 50px; letter-spacing: 1px; }
+        .fact-spammer { 
+            text-align: center; 
+            padding: 120px 5vw; 
+            background: linear-gradient(to bottom, transparent, rgba(157, 78, 221, 0.05), transparent); 
+            margin: 80px 0; 
+            position: relative;
+            border-radius: 40px;
+            backdrop-filter: blur(5px);
+        }
+        #fact-display { 
+            font-size: 2.5rem; 
+            font-family: 'Cormorant Garamond'; 
+            margin: 40px 0; 
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            min-height: 120px; 
+            font-style: italic;
+            font-weight: 400;
+            line-height: 1.4;
+            padding: 0 20px;
+        }
+        .spam-btn { 
+            background: var(--accent-gradient);
+            border: none; 
+            padding: 20px 50px; 
+            color: #000; 
+            font-weight: 800; 
+            cursor: pointer; 
+            border-radius: 50px; 
+            letter-spacing: 1px; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-size: 0.9rem;
+        }
+        .spam-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 79, 216, 0.3);
+        }
+        .spam-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        .spam-btn:hover::after {
+            left: 100%;
+        }
 
-        footer { text-align: center; padding: 120px 0; border-top: 1px solid var(--border); }
-        .signature { font-family: 'Cormorant Garamond'; font-size: 3rem; font-style: italic; color: var(--accent); margin-top: 20px; }
+        footer { 
+            text-align: center; 
+            padding: 120px 0; 
+            border-top: 1px solid var(--glass-border);
+            position: relative;
+        }
+        .signature { 
+            font-family: 'Cormorant Garamond'; 
+            font-size: 3.5rem; 
+            font-style: italic; 
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-top: 20px; 
+            font-weight: 400;
+        }
 
-        @media (max-width: 768px) { .card { width: 300px; height: 450px; } }
+        /* --- SCROLLBAR --- */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-gradient);
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) { 
+            .card { width: 300px; height: 450px; }
+            .hero-title { font-size: clamp(2.5rem, 10vw, 5rem); }
+            #fact-display { font-size: 1.8rem; }
+            .signature { font-size: 2.5rem; }
+            .stat-val { font-size: 2.8rem; }
+            .content-switch { font-size: 1.4rem; min-height: 100px; }
+            .dashboard { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        }
     </style>
 </head>
 <body>
@@ -113,7 +439,8 @@
 </section>
 
 <section class="fact-spammer">
-    <h2 class="serif" style="font-size: 3.5rem;">The Infinite Scroll of Riddhima</h2>
+    <h2 class="serif" style="font-size: 3.5rem; margin-bottom: 20px;">The Infinite Scroll of Riddhima</h2>
+    <div style="font-size: 0.9rem; letter-spacing: 3px; opacity: 0.6; margin-bottom: 40px;">PRESS BUTTON FOR RANDOM TRUTH</div>
     <div id="fact-display">Click the button to generate a random truth...</div>
     <button class="spam-btn" id="spam-trigger">GIVE ME ANOTHER ONE</button>
 </section>
@@ -123,17 +450,18 @@
 </section>
 
 <section style="text-align: center; max-width: 900px; margin: 0 auto; padding: 100px 20px;">
-    <h2 class="serif" style="font-size: 4rem; color: var(--accent);">The 5-Month Warp</h2>
+    <h2 class="serif" style="font-size: 4rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 30px;">The 5-Month Warp</h2>
     <p style="font-size: 1.4rem; line-height: 1.8; opacity: 0.8; margin-top: 40px; font-weight: 300;">
         They say it takes years to build a bond this thick, but we did it in 150 days. 
-        It’s a scientific glitch. A soul-bond hidden inside 4-minute voice notes and Mumbai exhaustion. 
-        I’ve grown so used to your noise that silence actually feels weird now. 
+        It's a scientific glitch. A soul-bond hidden inside 4-minute voice notes and Mumbai exhaustion. 
+        I've grown so used to your noise that silence actually feels weird now. 
         Don't ever stop being exactly this annoying.
     </p>
 </section>
 
 <footer>
-    <p>Happy 18th Birthday, Weirdo.</p>
+    <p style="font-size: 0.9rem; letter-spacing: 2px; opacity: 0.6; margin-bottom: 10px;">A GLITCH IN THE SYSTEM • FOREVER ENCODED</p>
+    <p style="font-size: 1.2rem; margin-bottom: 30px; opacity: 0.8;">Happy 18th Birthday, Weirdo.</p>
     <div class="signature">With all my love, Malay (Princess)</div>
 </footer>
 
@@ -189,17 +517,34 @@
     }
 
     // 2. SMOOTH SCROLL
-    const lenis = new Lenis({ duration: 1.5 });
-    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    const lenis = new Lenis({ 
+        duration: 1.5,
+        smoothWheel: true
+    });
+    function raf(time) { 
+        lenis.raf(time); 
+        requestAnimationFrame(raf); 
+    }
     requestAnimationFrame(raf);
 
     // 3. CONTENT & GALLERY
     const allFacts = [
-        "Professional Annoying Specialist.", "Full-time resident of Delulu Land.", "Occupying emotional real estate rent-free.",
-        "Success Rate of Roasts: 99.9%.", "Can speak 400 words per minute when excited.", "Expert at interpreting random eye contact.",
-        "Mumbai Trip Survivor.", "Elite-level Yapper.", "Career Path: Professional Headache.", "Has a 100% Show-up rate.",
-        "One of those people I can't imagine life without.", "The best 'brother' I ever had.", "Will probably yap for the next 60 years straight.",
-        "150 days = 10 years of memories.", "Princess Status: Permanent.", "Stay weird. Stay loud. Stay you."
+        "Professional Annoying Specialist.", 
+        "Full-time resident of Delulu Land.", 
+        "Occupying emotional real estate rent-free.",
+        "Success Rate of Roasts: 99.9%.", 
+        "Can speak 400 words per minute when excited.", 
+        "Expert at interpreting random eye contact.",
+        "Mumbai Trip Survivor.", 
+        "Elite-level Yapper.", 
+        "Career Path: Professional Headache.", 
+        "Has a 100% Show-up rate.",
+        "One of those people I can't imagine life without.", 
+        "The best 'brother' I ever had.", 
+        "Will probably yap for the next 60 years straight.",
+        "150 days = 10 years of memories.", 
+        "Princess Status: Permanent.", 
+        "Stay weird. Stay loud. Stay you."
     ];
 
     const ticker = document.getElementById('ticker-content');
@@ -209,14 +554,32 @@
     const factDisplay = document.getElementById('fact-display');
     spamBtn.addEventListener('click', () => {
         const randomFact = allFacts[Math.floor(Math.random() * allFacts.length)];
-        gsap.fromTo(factDisplay, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, onStart: () => { factDisplay.innerText = randomFact; } });
+        gsap.fromTo(factDisplay, 
+            { opacity: 0, y: 10 }, 
+            { 
+                opacity: 1, 
+                y: 0, 
+                duration: 0.5,
+                onStart: () => { 
+                    factDisplay.innerText = `"${randomFact}"`; 
+                },
+                onComplete: () => {
+                    gsap.to(factDisplay, {
+                        scale: 1.05,
+                        duration: 0.3,
+                        yoyo: true,
+                        repeat: 1
+                    });
+                }
+            }
+        );
     });
 
     const root = document.getElementById('gallery-root');
     for (let i = 1; i <= totalImages; i++) {
         const div = document.createElement('div');
         div.className = 'card';
-        div.innerHTML = `<img src="${i}.jpeg">`;
+        div.innerHTML = `<img src="${i}.jpeg" alt="Memory ${i}">`;
         root.appendChild(div);
     }
 
@@ -240,7 +603,17 @@
                 start: "left center",
                 end: "right center",
                 toggleActions: "play reverse play reverse",
-                onToggle: self => self.isActive ? card.classList.add('active') : card.classList.remove('active')
+                onToggle: self => {
+                    if (self.isActive) {
+                        card.classList.add('active');
+                        gsap.to(card, {
+                            boxShadow: "0 0 40px rgba(255, 79, 216, 0.5)",
+                            duration: 0.5
+                        });
+                    } else {
+                        card.classList.remove('active');
+                    }
+                }
             }
         });
     });
@@ -253,23 +626,90 @@
         isToast = !isToast;
         toggleBtn.classList.toggle('toast-active');
         toggleBtn.innerText = isToast ? "CURRENT MODE: TOAST" : "CURRENT MODE: ROAST";
-        modeText.innerText = isToast ? 
-            "You are my safe place, my chosen brother, and the person I can't imagine my life without." : 
-            "You are an elite-level yapping machine and a professional pain in my neck.";
+        
+        const roastText = "You are an elite-level yapping machine and a professional pain in my neck.";
+        const toastText = "You are my safe place, my chosen brother, and the person I can't imagine my life without.";
+        
+        gsap.to(modeText, {
+            opacity: 0,
+            y: -10,
+            duration: 0.3,
+            onComplete: () => {
+                modeText.innerText = isToast ? toastText : roastText;
+                gsap.to(modeText, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.3
+                });
+            }
+        });
     });
 
-    // Background Canvas
+    // Background Canvas with Particles
     const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
     let w, h;
-    function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
-    window.addEventListener('resize', resize); resize();
+    
+    function resize() { 
+        w = canvas.width = window.innerWidth; 
+        h = canvas.height = window.innerHeight; 
+    }
+    
+    window.addEventListener('resize', resize); 
+    resize();
+    
+    const particles = [];
+    for(let i = 0; i < 60; i++) {
+        particles.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            size: Math.random() * 1.5 + 0.5,
+            speed: Math.random() * 0.3 + 0.1,
+            color: Math.random() > 0.5 ? 'rgba(255, 79, 216, 0.3)' : 'rgba(157, 78, 221, 0.3)'
+        });
+    }
+    
     function anim() { 
-        ctx.clearRect(0,0,w,h); ctx.fillStyle = "rgba(255,157,233,0.3)";
-        for(let i=0; i<40; i++) { ctx.beginPath(); ctx.arc(Math.random()*w, Math.random()*h, 0.8, 0, Math.PI*2); ctx.fill(); }
+        ctx.clearRect(0, 0, w, h);
+        
+        particles.forEach(p => {
+            p.y -= p.speed;
+            if(p.y < 0) {
+                p.y = h;
+                p.x = Math.random() * w;
+            }
+            
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fillStyle = p.color;
+            ctx.fill();
+        });
+        
         requestAnimationFrame(anim); 
     }
     anim();
+
+    // Add floating hearts on click
+    document.addEventListener('click', (e) => {
+        const heart = document.createElement('div');
+        heart.innerHTML = '❤️';
+        heart.style.position = 'fixed';
+        heart.style.left = `${e.clientX}px`;
+        heart.style.top = `${e.clientY}px`;
+        heart.style.fontSize = '1.5rem';
+        heart.style.pointerEvents = 'none';
+        heart.style.zIndex = '9999';
+        document.body.appendChild(heart);
+        
+        gsap.to(heart, {
+            y: -100,
+            x: (Math.random() - 0.5) * 100,
+            opacity: 0,
+            duration: 2,
+            ease: "power2.out",
+            onComplete: () => heart.remove()
+        });
+    });
 </script>
 
 </body> 
