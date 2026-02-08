@@ -577,6 +577,68 @@
             z-index: 1;
         }
 
+        /* EXACT DAYS COUNTER */
+        .exact-days-counter {
+            text-align: center;
+            padding: 40px;
+            background: var(--glass);
+            border-radius: 20px;
+            margin: 40px auto;
+            max-width: 600px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+        
+        .exact-days-number {
+            font-size: 4rem;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'Montserrat';
+            margin-bottom: 10px;
+        }
+        
+        .exact-days-label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-dim);
+        }
+        
+        .meet-date-display {
+            font-size: 1.1rem;
+            margin-top: 20px;
+            color: var(--text);
+            opacity: 0.8;
+        }
+        
+        .meet-date-display span {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+        }
+        
+        /* CURRENT DATE DISPLAY */
+        .current-date-display {
+            font-size: 1rem;
+            margin-top: 10px;
+            color: var(--text);
+            opacity: 0.7;
+            font-style: italic;
+        }
+        
+        .current-date-display span {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+        }
+
         @media (max-width: 768px) { 
             .card { width: 300px; height: 450px; }
             .hero-title { font-size: clamp(2.5rem, 10vw, 5rem); }
@@ -595,6 +657,7 @@
             }
             .timeline-dot { left: 30px; }
             .countdown-box { min-width: 120px; }
+            .exact-days-number { font-size: 3rem; }
         }
     </style>
 </head>
@@ -631,27 +694,46 @@
     </div>
 </section>
 
-<!-- NEW COUNTDOWN TIMER -->
+<!-- UPDATED COUNTDOWN TIMER -->
 <section class="countdown-section">
-    <h2 class="serif" style="font-size: 3.5rem; margin-bottom: 20px;">Countdown to Forever</h2>
-    <div style="font-size: 0.9rem; letter-spacing: 3px; opacity: 0.6; margin-bottom: 40px;">TIME SINCE WE MET</div>
+    <h2 class="serif" style="font-size: 3.5rem; margin-bottom: 20px;">Time Since We Met</h2>
+    <div style="font-size: 0.9rem; letter-spacing: 3px; opacity: 0.6; margin-bottom: 40px;">AUGUST 06, 2025 → TODAY</div>
+    
+    <!-- EXACT DAYS COUNTER -->
+    <div class="exact-days-counter">
+        <div class="exact-days-number" id="exact-days">186</div>
+        <div class="exact-days-label">DAYS TOGETHER</div>
+        <div class="meet-date-display">Since <span>August 06, 2025</span> → Today <span id="today-date">February 08, 2026</span></div>
+        <div class="current-date-display">Page last viewed: <span id="current-time">Loading...</span></div>
+    </div>
+    
     <div class="countdown-container">
         <div class="countdown-box">
-            <div class="countdown-number" id="days">150</div>
+            <div class="countdown-number" id="months">6</div>
+            <div class="countdown-label">Months</div>
+        </div>
+        <div class="countdown-box">
+            <div class="countdown-number" id="days-count">6</div>
             <div class="countdown-label">Days</div>
         </div>
         <div class="countdown-box">
-            <div class="countdown-number" id="hours">0</div>
+            <div class="countdown-number" id="hours-count">0</div>
             <div class="countdown-label">Hours</div>
         </div>
         <div class="countdown-box">
-            <div class="countdown-number" id="minutes">0</div>
+            <div class="countdown-number" id="minutes-count">0</div>
             <div class="countdown-label">Minutes</div>
         </div>
         <div class="countdown-box">
-            <div class="countdown-number" id="seconds">0</div>
+            <div class="countdown-number" id="seconds-count">0</div>
             <div class="countdown-label">Seconds</div>
         </div>
+    </div>
+    
+    <div style="margin-top: 40px; font-size: 1.1rem; opacity: 0.7; max-width: 600px; margin-left: auto; margin-right: auto;">
+        That's <span id="weeks-count" style="background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 600;">26 weeks</span>, 
+        <span id="hours-total" style="background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 600;">4,464 hours</span>, 
+        and counting of pure chaos and laughter.
     </div>
 </section>
 
@@ -678,59 +760,68 @@
     <div class="cards-container" id="gallery-root"></div>
 </section>
 
-<!-- NEW INTERACTIVE TIMELINE -->
+<!-- UPDATED INTERACTIVE TIMELINE -->
 <section class="timeline-section">
-    <h2 class="serif" style="font-size: 3.5rem; text-align: center; margin-bottom: 60px; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Our Timeline</h2>
+    <h2 class="serif" style="font-size: 3.5rem; text-align: center; margin-bottom: 60px; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Our Journey</h2>
     <div class="timeline">
         <div class="timeline-item">
             <div class="timeline-dot"></div>
             <div class="timeline-content">
-                <div class="timeline-date">Day 1</div>
+                <div class="timeline-date">August 06, 2025</div>
                 <h3>The Beginning</h3>
-                <p>The first "hey" that started it all. Little did we know this would become an epic saga.</p>
+                <p>The day we first met. The first "hey" that started this incredible adventure.</p>
             </div>
         </div>
         <div class="timeline-item">
             <div class="timeline-dot"></div>
             <div class="timeline-content">
-                <div class="timeline-date">Month 1</div>
-                <h3>Voice Note Era</h3>
-                <p>Discovering the art of 4-minute voice notes and realizing we could talk about absolutely anything.</p>
+                <div class="timeline-date">October 2025</div>
+                <h3>Voice Note Era Begins</h3>
+                <p>Discovering we could talk for hours through 4-minute voice notes about absolutely everything.</p>
             </div>
         </div>
         <div class="timeline-item">
             <div class="timeline-dot"></div>
             <div class="timeline-content">
-                <div class="timeline-date">Month 3</div>
+                <div class="timeline-date">December 2025</div>
                 <h3>Mumbai Adventure</h3>
-                <p>The trip that solidified everything. Exhaustion, laughter, and endless conversations.</p>
+                <p>The trip that changed everything. Late nights, endless talks, and memories that'll last forever.</p>
             </div>
         </div>
         <div class="timeline-item">
             <div class="timeline-dot"></div>
             <div class="timeline-content">
-                <div class="timeline-date">Month 5</div>
-                <h3>Present Day</h3>
-                <p>150 days of chaos, laughter, and a bond that feels like it's been forever.</p>
+                <div class="timeline-date" id="today-timeline-date">February 08, 2026</div>
+                <h3>Today</h3>
+                <p id="today-timeline-text">186 days of laughter, chaos, and a bond that feels like it's been forever. Happy 18th Birthday!</p>
             </div>
         </div>
     </div>
 </section>
 
 <section style="text-align: center; max-width: 900px; margin: 0 auto; padding: 100px 20px;">
-    <h2 class="serif" style="font-size: 4rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 30px;">The 5-Month Warp</h2>
+    <h2 class="serif" style="font-size: 4rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 30px;">
+        The <span id="dynamic-month-count" style="font-style: italic;">6-Month</span> Warp
+    </h2>
     <p style="font-size: 1.4rem; line-height: 1.8; opacity: 0.8; margin-top: 40px; font-weight: 300;">
-        They say it takes years to build a bond this thick, but we did it in 150 days. 
+        They say it takes years to build a bond this thick, but we did it in <span id="dynamic-days-count" style="font-weight: 600; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">186 days</span>. 
         It's a scientific glitch. A soul-bond hidden inside 4-minute voice notes and Mumbai exhaustion. 
         I've grown so used to your noise that silence actually feels weird now. 
         Don't ever stop being exactly this annoying.
     </p>
+    <div style="margin-top: 40px; padding: 30px; background: var(--glass); border-radius: 20px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px;">
+        <div style="font-size: 1.2rem; margin-bottom: 10px; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Fun Fact:</div>
+        <div style="font-size: 1.1rem; opacity: 0.8;">We've been friends for <span id="percentage-of-year" style="font-weight: 600; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">51%</span> of a year already! That's more than half a year of chaos!</div>
+    </div>
 </section>
 
 <footer>
     <p style="font-size: 0.9rem; letter-spacing: 2px; opacity: 0.6; margin-bottom: 10px;">A GLITCH IN THE SYSTEM • FOREVER ENCODED</p>
     <p style="font-size: 1.2rem; margin-bottom: 30px; opacity: 0.8;">Happy 18th Birthday, Weirdo.</p>
     <div class="signature">With all my love, Malay (Princess)</div>
+    <div style="margin-top: 40px; font-size: 0.9rem; opacity: 0.5;" id="footer-date">
+        Celebrating <span id="footer-days">186</span> days of friendship • Since August 06, 2025
+    </div>
 </footer>
 
 <script>
@@ -810,7 +901,7 @@
         "One of those people I can't imagine life without.", 
         "The best 'brother' I ever had.", 
         "Will probably yap for the next 60 years straight.",
-        "150 days = 10 years of memories.", 
+        "Every day with you feels like a new adventure.", 
         "Princess Status: Permanent.", 
         "Stay weird. Stay loud. Stay you."
     ];
@@ -957,27 +1048,99 @@
     }
     anim();
 
-    // NEW FEATURES
-
-    // 1. COUNTDOWN TIMER (150 days from a specific start date)
-    const startDate = new Date('2024-09-01'); // Example start date
+    // CORRECTED COUNTDOWN TIMER CALCULATION
+    // We met on August 06, 2025
+    const startDate = new Date('2025-08-06T00:00:00');
+    
+    // Format date to readable string
+    function formatDate(date) {
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const day = date.getDate();
+        const month = months[date.getMonth()];
+        const year = date.getFullYear();
+        return `${month} ${day}, ${year}`;
+    }
+    
+    // Format time to readable string
+    function formatTime(date) {
+        const hours = date.getHours();
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const seconds = date.getSeconds().toString().padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        const formattedHours = hours % 12 || 12;
+        return `${formattedHours}:${minutes}:${seconds} ${ampm}`;
+    }
+    
     function updateCountdown() {
         const now = new Date();
         const diff = now - startDate;
         
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        // Calculate total days (this will be ~186 on Feb 8, 2026)
+        const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
+        
+        // Calculate months and remaining days
+        const months = Math.floor(totalDays / 30.44); // Average month length
+        const days = Math.floor(totalDays % 30.44);
+        
+        // Calculate hours, minutes, seconds for today
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
         
-        document.getElementById('days').textContent = days;
-        document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-        document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        // Calculate weeks
+        const weeks = Math.floor(totalDays / 7);
+        
+        // Calculate total hours
+        const totalHours = Math.floor(diff / (1000 * 60 * 60));
+        
+        // Calculate percentage of year
+        const percentageOfYear = ((totalDays / 365) * 100).toFixed(1);
+        
+        // Update today's date display
+        const todayFormatted = formatDate(now);
+        const currentTimeFormatted = formatTime(now);
+        
+        // Update display
+        document.getElementById('exact-days').textContent = totalDays;
+        document.getElementById('months').textContent = months;
+        document.getElementById('days-count').textContent = days;
+        document.getElementById('hours-count').textContent = hours.toString().padStart(2, '0');
+        document.getElementById('minutes-count').textContent = minutes.toString().padStart(2, '0');
+        document.getElementById('seconds-count').textContent = seconds.toString().padStart(2, '0');
+        
+        document.getElementById('today-date').textContent = todayFormatted;
+        document.getElementById('current-time').textContent = currentTimeFormatted;
+        document.getElementById('today-timeline-date').textContent = todayFormatted;
+        
+        document.getElementById('weeks-count').textContent = `${weeks} weeks`;
+        document.getElementById('hours-total').textContent = `${totalHours.toLocaleString()} hours`;
+        document.getElementById('percentage-of-year').textContent = `${percentageOfYear}%`;
+        
+        // Update dynamic text throughout the page
+        document.getElementById('dynamic-days-count').textContent = `${totalDays} days`;
+        document.getElementById('dynamic-month-count').textContent = `${months}-Month`;
+        document.getElementById('footer-days').textContent = totalDays;
+        
+        // Update the timeline text
+        document.getElementById('today-timeline-text').textContent = 
+            `${totalDays} days of laughter, chaos, and a bond that feels like it's been forever. Happy 18th Birthday!`;
+        
+        // Update the "X-Month Warp" section title
+        const warpTitle = document.querySelector('h2.serif');
+        warpTitle.innerHTML = `The <span style="background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-style: italic;">${months}-Month</span> Warp`;
+        
+        // Update the main paragraph
+        const mainParagraph = document.querySelector('section:last-of-type p');
+        mainParagraph.innerHTML = 
+            `They say it takes years to build a bond this thick, but we did it in <span style="font-weight: 600; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">${totalDays} days</span>. 
+            It's a scientific glitch. A soul-bond hidden inside 4-minute voice notes and Mumbai exhaustion. 
+            I've grown so used to your noise that silence actually feels weird now. 
+            Don't ever stop being exactly this annoying.`;
     }
     
+    // Update every second
     setInterval(updateCountdown, 1000);
-    updateCountdown();
+    updateCountdown(); // Initial call
 
     // 2. QUOTE CAROUSEL
     const quotes = [
@@ -1094,6 +1257,19 @@
         scrollTrigger: {
             scrub: 1
         }
+    });
+    
+    // 7. Animate the exact days counter
+    gsap.from("#exact-days", {
+        scrollTrigger: {
+            trigger: ".countdown-section",
+            start: "top 70%",
+            toggleActions: "play none none none"
+        },
+        scale: 0,
+        rotation: 360,
+        duration: 1.5,
+        ease: "back.out(1.7)"
     });
 </script>
 
