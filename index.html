@@ -260,7 +260,7 @@
             color: var(--text-dim);
         }
 
-        /* --- GALLERY --- */
+        /* --- IMPROVED GALLERY --- */
         .gallery-wrap { 
             height: 100vh; 
             display: flex; 
@@ -271,7 +271,8 @@
         .cards-container { 
             display: flex; 
             gap: 40px; 
-            padding-left: 15vw; 
+            padding-left: calc(50vw - 200px); /* Start from center minus half card width */
+            padding-right: calc(50vw - 200px); /* Padding on right for centering last image */
         }
         .card { 
             width: 400px; 
@@ -289,11 +290,14 @@
                 rgba(255,255,255,0.04),
                 rgba(0,0,0,0.6)
             );
+            /* Ensure all cards are visible */
+            opacity: 0.5;
         }
         .card.active { 
             filter: grayscale(0) brightness(1); 
             transform: scale(1.05); 
             border-color: transparent;
+            opacity: 1;
             box-shadow: 
                 0 20px 50px rgba(0,0,0,0.6),
                 0 0 40px var(--accent-glow);
@@ -306,6 +310,140 @@
         }
         .card.active img {
             transform: scale(1.05);
+        }
+
+        /* Progress indicator for gallery */
+        .gallery-progress {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .gallery-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--accent-gradient);
+            transition: width 0.1s linear;
+        }
+
+        /* --- STORY BUTTON FOR IMAGES --- */
+        .story-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: var(--accent-gradient);
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .card:hover .story-btn, .card.active .story-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .story-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 79, 216, 0.3);
+        }
+
+        /* --- STORY MODAL --- */
+        .story-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(5, 5, 5, 0.95);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+        .story-modal.active {
+            display: flex;
+            animation: modalFadeIn 0.4s ease;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .modal-content {
+            background: var(--bg-gradient);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.5),
+                0 0 40px var(--accent-glow);
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--accent-gradient);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+        .modal-close:hover {
+            transform: rotate(90deg) scale(1.1);
+        }
+        .modal-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border: 1px solid var(--glass-border);
+        }
+        .modal-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'Cormorant Garamond';
+            font-style: italic;
+        }
+        .modal-story {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0.9;
+            margin-top: 20px;
         }
 
         /* --- RANDOM FACT --- */
@@ -641,6 +779,11 @@
 
         @media (max-width: 768px) { 
             .card { width: 300px; height: 450px; }
+            .cards-container {
+                padding-left: calc(50vw - 150px); /* Half card width for mobile */
+                padding-right: calc(50vw - 150px);
+                gap: 30px;
+            }
             .hero-title { font-size: clamp(2.5rem, 10vw, 5rem); }
             #fact-display { font-size: 1.8rem; }
             .signature { font-size: 2.5rem; }
@@ -658,6 +801,17 @@
             .timeline-dot { left: 30px; }
             .countdown-box { min-width: 120px; }
             .exact-days-number { font-size: 3rem; }
+            
+            .story-btn {
+                opacity: 1;
+                transform: translateY(0);
+                padding: 8px 16px;
+                font-size: 0.7rem;
+            }
+            
+            .gallery-progress {
+                width: 200px;
+            }
         }
     </style>
 </head>
@@ -669,6 +823,16 @@
     <div class="progress-bar"><div class="progress-fill" id="fill"></div></div>
 </div>
 
+<!-- Story Modal -->
+<div class="story-modal" id="story-modal">
+    <div class="modal-content">
+        <button class="modal-close" id="modal-close">&times;</button>
+        <img class="modal-image" id="modal-image" src="" alt="Memory">
+        <h2 class="modal-title" id="modal-title">Memory Story</h2>
+        <div class="modal-story" id="modal-story"></div>
+    </div>
+</div>
+
 <canvas id="bg-canvas"></canvas>
 
 <div class="ticker-wrap">
@@ -677,6 +841,7 @@
 
 <section class="hero">
     <div style="letter-spacing: 12px; opacity: 0.4; margin-bottom: 20px; font-size: 0.7rem;">ESTABLISHED 2008</div>
+    <!-- UPDATED TITLE: Added "ultimate" before "Riddhima Chapter" -->
     <h1 class="hero-title">The Ultimate<br>Riddhima Chapter</h1>
     
     <div class="toggle-zone">
@@ -757,6 +922,11 @@
 </section>
 
 <section class="gallery-wrap">
+    <!-- Progress indicator -->
+    <div class="gallery-progress">
+        <div class="gallery-progress-fill" id="gallery-progress"></div>
+    </div>
+    
     <div class="cards-container" id="gallery-root"></div>
 </section>
 
@@ -934,47 +1104,178 @@
         );
     });
 
+    // STORY DATA FOR EACH IMAGE
+    const imageStories = {
+        1: "The first picture we ever took together. You were pretending to be mad but I could see you trying not to laugh.",
+        2: "That time in Mumbai when we found that hidden cafe and talked for 4 hours straight about absolutely nothing and everything.",
+        3: "Remember this? You were trying to teach me something and I was completely lost but pretending to understand.",
+        4: "Our first video call screenshot! You were showing me your room and I was judging your decor choices.",
+        5: "That ridiculous filter we discovered at 3 AM. We looked like aliens but couldn't stop laughing.",
+        6: "The day you sent me 47 voice notes in a row explaining why you were right about something trivial.",
+        7: "Our matching profile picture phase. Everyone thought we were dating but we were just being weird.",
+        8: "When you tried to bake for the first time and sent me 100 pictures of the 'disaster'.",
+        9: "The screenshot of our 4-hour call that accidentally got cut off because your phone died.",
+        10: "That time we planned to watch a movie together but ended up talking through the whole thing.",
+        11: "Your birthday last year! You were pretending to hate the attention but loving every second.",
+        12: "The 'good morning' spam you'd send me every single day without fail.",
+        13: "Our first argument screenshot. We were mad for exactly 17 minutes before cracking up.",
+        14: "That ridiculous meme you made about me that actually made me laugh out loud.",
+        15: "The time we stayed up until sunrise just because neither of us wanted to hang up first.",
+        16: "Your dramatic 'I'm never talking to you again' text followed by 20 more messages.",
+        17: "When you got sick and still insisted on calling me to complain about everything.",
+        18: "Our Spotify blended playlist cover. You picked all the songs I secretly loved.",
+        19: "That embarrassing picture you threatened to delete but I saved forever.",
+        20: "The day we realized we'd been talking for 6 months straight without a single day missed.",
+        21: "Your 'emergency' call because you saw a spider and needed moral support.",
+        22: "When you tried to give me fashion advice and I completely ignored it.",
+        23: "Our first inside joke documented. It made no sense to anyone else.",
+        24: "That time you called me just to breathe dramatically into the phone.",
+        25: "Your reaction when I finally admitted you were right about something.",
+        26: "The 3 AM existential crisis conversation screenshots.",
+        27: "When you sent me the same meme 5 times because you forgot you already sent it.",
+        28: "Our coordinated social media posts that confused everyone.",
+        29: "That picture you hate but I love because it's genuinely you.",
+        30: "The day we realized we'd become each other's person without even trying.",
+        31: "Your dramatic reading of my boring text messages.",
+        32: "This collection of moments that somehow became my favorite story. The 32nd memory - the last but definitely not the least. Every single one of these pictures tells a chapter of our story, and I wouldn't trade a single second of it."
+    };
+
+    // Create gallery with story buttons
     const root = document.getElementById('gallery-root');
     for (let i = 1; i <= totalImages; i++) {
         const div = document.createElement('div');
         div.className = 'card';
-        div.innerHTML = `<img src="${i}.jpeg" alt="Memory ${i}">`;
+        div.innerHTML = `
+            <img src="${i}.jpeg" alt="Memory ${i}">
+            <button class="story-btn" data-index="${i}">📖 Story</button>
+        `;
         root.appendChild(div);
     }
 
     const cards = gsap.utils.toArray(".card");
+    const cardWidth = 400; // Card width + gap
+    const gap = 40;
+    const totalWidth = (cards.length * (400 + gap)) - window.innerWidth + (window.innerWidth / 2);
+    
+    // IMPROVED GALLERY SCROLL - ensures last image is centered at the end
     let scrollTween = gsap.to(cards, {
-        x: () => -(root.scrollWidth - window.innerWidth),
+        x: () => -totalWidth,
         ease: "none",
         scrollTrigger: {
             trigger: ".gallery-wrap",
             pin: true,
             scrub: 1,
-            end: () => "+=" + (root.scrollWidth)
+            end: () => "+=" + totalWidth,
+            onUpdate: (self) => {
+                // Update progress bar
+                const progress = self.progress;
+                document.getElementById('gallery-progress').style.width = (progress * 100) + "%";
+                
+                // Make sure images stay visible
+                cards.forEach((card, index) => {
+                    const cardProgress = Math.abs(card.getBoundingClientRect().x) / window.innerWidth;
+                    const distanceFromCenter = Math.abs(card.getBoundingClientRect().x + 200 - window.innerWidth/2);
+                    
+                    // Adjust opacity based on position
+                    if (distanceFromCenter < 300) {
+                        card.classList.add('active');
+                        card.style.opacity = 1;
+                        card.style.filter = "grayscale(0) brightness(1)";
+                    } else {
+                        card.classList.remove('active');
+                        card.style.opacity = 0.5;
+                        card.style.filter = "grayscale(0.8) brightness(0.7)";
+                    }
+                });
+                
+                // Special handling for last card - ensure it's visible at the end
+                if (progress > 0.98) {
+                    const lastCard = cards[cards.length - 1];
+                    lastCard.classList.add('active');
+                    lastCard.style.opacity = 1;
+                    lastCard.style.filter = "grayscale(0) brightness(1)";
+                    
+                    // Force last card to be centered
+                    gsap.to(cards, {
+                        x: -totalWidth,
+                        duration: 0.5,
+                        ease: "power2.out"
+                    });
+                }
+            }
         }
     });
 
-    cards.forEach(card => {
-        gsap.to(card, {
-            scrollTrigger: {
-                trigger: card,
-                containerAnimation: scrollTween,
-                start: "left center",
-                end: "right center",
-                toggleActions: "play reverse play reverse",
-                onToggle: self => {
-                    if (self.isActive) {
-                        card.classList.add('active');
-                        gsap.to(card, {
-                            boxShadow: "0 0 40px rgba(255, 79, 216, 0.5)",
-                            duration: 0.5
-                        });
-                    } else {
-                        card.classList.remove('active');
-                    }
-                }
+    // Make cards clickable for story buttons
+    cards.forEach((card, index) => {
+        // Add click event to activate card when clicked
+        card.addEventListener('click', (e) => {
+            if (!e.target.classList.contains('story-btn')) {
+                // Calculate scroll position to center this card
+                const scrollPosition = index * (400 + gap);
+                const maxScroll = totalWidth;
+                const targetX = -Math.min(scrollPosition, maxScroll);
+                
+                gsap.to(cards, {
+                    x: targetX,
+                    duration: 1,
+                    ease: "power2.out"
+                });
+                
+                // Update scroll trigger progress
+                ScrollTrigger.refresh();
             }
         });
+    });
+
+    // STORY MODAL FUNCTIONALITY
+    const storyModal = document.getElementById('story-modal');
+    const modalClose = document.getElementById('modal-close');
+    const modalImage = document.getElementById('modal-image');
+    const modalTitle = document.getElementById('modal-title');
+    const modalStory = document.getElementById('modal-story');
+
+    // Add click events to all story buttons
+    document.querySelectorAll('.story-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent card click
+            const index = parseInt(btn.getAttribute('data-index'));
+            
+            // Set modal content
+            modalImage.src = `${index}.jpeg`;
+            modalTitle.textContent = `Memory #${index}`;
+            modalStory.textContent = imageStories[index] || "This memory speaks for itself. Another moment in our incredible journey.";
+            
+            // Show modal with animation
+            storyModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Animate modal in
+            gsap.fromTo('.modal-content',
+                { scale: 0.8, opacity: 0 },
+                { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(1.2)" }
+            );
+        });
+    });
+
+    // Close modal
+    modalClose.addEventListener('click', () => {
+        gsap.to('.modal-content', {
+            scale: 0.8,
+            opacity: 0,
+            duration: 0.3,
+            onComplete: () => {
+                storyModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    });
+
+    // Close modal when clicking outside content
+    storyModal.addEventListener('click', (e) => {
+        if (e.target === storyModal) {
+            modalClose.click();
+        }
     });
 
     // Toggle Mode
@@ -1209,6 +1510,9 @@
 
     // 4. Add floating hearts on click (enhanced)
     document.addEventListener('click', (e) => {
+        // Don't trigger if clicking on story button or modal
+        if (e.target.closest('.story-btn') || e.target.closest('.story-modal')) return;
+        
         // Create multiple hearts for better effect
         for (let i = 0; i < 3; i++) {
             const heart = document.createElement('div');
@@ -1270,6 +1574,11 @@
         rotation: 360,
         duration: 1.5,
         ease: "back.out(1.7)"
+    });
+
+    // Force refresh ScrollTrigger on resize
+    window.addEventListener('resize', () => {
+        ScrollTrigger.refresh();
     });
 </script>
 
